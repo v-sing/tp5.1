@@ -79,7 +79,7 @@ class Home extends Backend
         exec("awk '{print $1}' /home/zzcard/wwwlogs/api.log | sort -r |uniq -c | wc -l", $output4, $status);
         //uv
         exec("awk '{print $11}' /home/zzcard/wwwlogs/api.log | sort -r |uniq -c | wc -l", $output5, $status);
-//        dump(app('System')->uv());exit;
+        dump(app('System')->get_used_status());exit;
 //        dump(date('Ymd',strtotime('+2 year',strtotime('20170901'))));exit;
         return $this->fetch();
     }
