@@ -242,8 +242,12 @@ class System
 
     function get_used_status()
     {
-        $fp = exec('top -b -n 2 | grep -E "^(Cpu|Mem|Tasks)"',$sys_info);//获取某一时刻系统cpu和内存使用情况
-         dump($sys_info);exit;
+        $fp = popen("top -b -n 2 | grep -E \"^(Cpu|Mem|Tasks)\"", "r");//获取某一时刻系统cpu和内存使用情况
+        $rs = "";
+        while (!feof($fp)) {
+            $rs .= fread($fp, 1024);
+        }
+        pclose($fp);
         $sys_info  = explode("\n", $rs);
         $tast_info = explode(",", $sys_info[3]);//进程 数组
         $cpu_info  = explode(",", $sys_info[4]);  //CPU占有量  数组
